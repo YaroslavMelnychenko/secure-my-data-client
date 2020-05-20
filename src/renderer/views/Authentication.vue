@@ -43,7 +43,7 @@ export default {
 	},
 	data() {
 		return {
-			activeTab: 'tab_sign_up',
+			activeTab: 'tab_sign_in',
 			showDialog: false,
 			userData: {},
 		}

@@ -2,6 +2,7 @@ import axios from 'axios';
 import Vue from 'vue';
 
 var errors = require('./errors');
+var request = require('request');
 
 Vue.http = Vue.prototype.$http = axios;
 
@@ -121,6 +122,188 @@ export default {
 	},
 
 	refresh: (refreshToken) => {
-		//
+		return new Promise((resolve, reject) => {
+			Vue.http.post(ApiServer + '/auth/refresh', {
+				refresh_token: refreshToken
+			}).then(response => {
+				console.log(response.data);
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	userDetails: () => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.get(ApiServer + '/users/details', {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	userSecureData: () => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.get(ApiServer + '/users/data', {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				console.log(response.data);
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	downloadData: (dataId) => {
+		var token = App.$store.getters.getAccessToken;
+
+		return request({
+			method: 'GET',
+			uri: ApiServer + `/users/data/${dataId}`,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		});
+	},
+
+	getData: (dataId) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.get(ApiServer + `/users/data/${dataId}`, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	deleteData: (dataId) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.delete(ApiServer + `/users/data/${dataId}`, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	editData: (dataId, newData) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.put(ApiServer + `/users/data/${dataId}`, newData, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	storePlainData: (data) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.post(ApiServer + '/users/data', data, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	storeAttachment: (attachment) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			var formData = new FormData();
+			formData.append('attachment', attachment);
+
+			Vue.http.post(ApiServer + '/users/data', formData, {
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'content-type': 'multipart/form-data'
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	resendVerificationCode: () => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.get(ApiServer + '/users/verify/resend', {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
+	},
+
+	verifyEmail: (code) => {
+		return new Promise((resolve, reject) => {
+			var token = App.$store.getters.getAccessToken;
+
+			Vue.http.post(ApiServer + '/users/verify', {
+				code
+			}, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).then(response => {
+				resolve(response.data);
+			}).catch(error => {
+				parseError(error);
+				reject(error);
+			});
+		});
 	}
 }

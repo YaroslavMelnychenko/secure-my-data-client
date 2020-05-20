@@ -91,10 +91,8 @@ export default {
 					password: this.password,
 					private_key: this.key
 				}).then(response => {
-					
 					this.saveTokens(response);
-
-				}).finally(() => {
+				}).catch(error => {
 					App.loaderState(false);
 				});
 			} 
@@ -107,15 +105,7 @@ export default {
 			};
 
 			this.$store.dispatch('setTokens', tokens).then(() => {
-				var apiSettings = this.$store.getters.getApiSettings;
-
-				//var sessionLifetime = Number(apiSettings.session_lifetime) * 60 * 1000;
-
-				var sessionLifetime = 2000;
-
-				window.sessionRefreshLoop = setInterval(() => {
-					console.log('session refreshed');
-				}, sessionLifetime);
+				this.$router.replace({ name: 'profile' });
 			});
 		}
 	}

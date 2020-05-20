@@ -8,6 +8,11 @@
 			:active="loader.active"
             :show="loader.show"
 		/>
+		<progress-loader
+			:active="progressLoader.active"
+			:show="progressLoader.show"
+			:amount="progressLoader.amount"
+		></progress-loader>
 		<md-dialog class="app__alert"
             :md-active.sync="alert.show"
 			:md-close-on-esc="false"
@@ -28,12 +33,14 @@
 <script>
 import Preloader from './components/Preloader'
 import Loader from './components/Loader'
+import ProgressLoader from './components/ProgressLoader'
 
 export default {
 	name: "smd-client",
 	components: {
 		Preloader,
-		Loader
+		Loader,
+		ProgressLoader
 	},
 	data() {
 		return {
@@ -45,6 +52,12 @@ export default {
 			loader: {
 				show: false,
 				active: false
+			},
+
+			progressLoader: {
+				show: false,
+				active: false,
+				amount: 0
 			},
 
 			alert: {
@@ -93,6 +106,27 @@ export default {
 					this.loader.active = true;
 				}, 50);
 			}
+		},
+
+		progressLoaderState(state) {
+			if(!state) {
+				this.progressLoader.active = false;
+
+				setTimeout(() => {
+					this.progressLoader.show = false;
+					this.progressLoader.amount = 0;
+				}, 400);
+			} else {
+				this.progressLoader.show = true;
+
+				setTimeout(() => {
+					this.progressLoader.active = true;
+				}, 50);
+			}
+		},
+
+		progressLoaderSet(amount) {
+			this.progressLoader.amount = amount;
 		},
 
 		createAlert(title, content, confirm) {
