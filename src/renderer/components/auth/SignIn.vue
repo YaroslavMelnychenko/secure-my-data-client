@@ -77,15 +77,23 @@ export default {
 	},
 	methods: {
 		onKeyChange(e) {
-			this.key = e.target.files[0];
+			var file = e.target.files[0];
+
+			if(file.size > 1000 || file.type != "") {
+				this.key = null;
+				this.keyName = '';
+				App.createAlert('Помилка', 'Файл занадто великий або невірного формату');
+			} else {
+				this.key = file
+			}
 		},
 
 		onSubmit() {
 			this.$v.$touch();
 
-			App.loaderState(true);
-
 			if(!this.$v.$invalid) {
+				App.loaderState(true);
+
 				this.$api.signIn({
 					email: this.email,
 					password: this.password,

@@ -33,3 +33,4 @@ var Root = new Vue({
 }).$mount('#app')
 
 window.App = Root.$children[0];
+window.App.$router.replace('/');

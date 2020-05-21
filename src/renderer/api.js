@@ -27,42 +27,54 @@ var mapError = error => {
  * 'TOO_MANY_ATTEMPTS' => 503
  */
 var parseError = error => {
-	var message = error.response.data.message;
+	if(error.response !== undefined) {
+		var message = error.response.data.message;
+	} else {
+		return false;
+	}
 
 	switch(error.response.status) {
 		case 422:
-			App.createAlert('Помилка валідації', message);
+			window.App.createAlert('Помилка валідації', message);
 			break;
 		
+		case 400:
+			window.App.createAlert('Помилка', mapError(message));
+			break;
+
 		case 401:
-			App.createAlert('Помилка авторизації', mapError(message));
+			window.App.createAlert('Помилка авторизації', mapError(message));
 			break;
 
 		case 403:
-			App.createAlert('Помилка: заборонено', message)
+			window.App.createAlert('Помилка: заборонено', message)
 			break;
 
 		case 404:
-			App.createAlert('Помилка', 'Не знайдено');
+			window.App.createAlert('Помилка', 'Не знайдено');
 			break;
 
 		case 405:
-			App.createAlert('Помилка: невірний метод', message);
+			window.App.createAlert('Помилка: невірний метод', message);
 			break;
 
 		case 500:
-			App.createAlert('Помилка серверу', 'Подробиці в консолі');
+			window.App.createAlert('Помилка серверу', 'Подробиці в консолі');
 			break;
 
 		case 503:
-			App.createAlert('Помилка', 'Забагато запитів. Спробуйте пізніше');
+			window.App.createAlert('Помилка', 'Забагато запитів. Спробуйте пізніше');
 			break;
 
 		default: 
-			App.createAlert('Невідома помилка', error.message);
+			window.App.createAlert('Невідома помилка', error.message);
 			break;
 	}
 };
+
+var getToken = () => {
+	return window.App.$store.getters.getAccessToken;
+}
 
 export default {
 	status: () => {
@@ -137,7 +149,7 @@ export default {
 
 	userDetails: () => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.get(ApiServer + '/users/details', {
 				headers: {
@@ -154,7 +166,7 @@ export default {
 
 	userSecureData: () => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.get(ApiServer + '/users/data', {
 				headers: {
@@ -171,7 +183,7 @@ export default {
 	},
 
 	downloadData: (dataId) => {
-		var token = App.$store.getters.getAccessToken;
+		var token = getToken();
 
 		return request({
 			method: 'GET',
@@ -184,7 +196,7 @@ export default {
 
 	getData: (dataId) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.get(ApiServer + `/users/data/${dataId}`, {
 				headers: {
@@ -201,7 +213,7 @@ export default {
 
 	deleteData: (dataId) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.delete(ApiServer + `/users/data/${dataId}`, {
 				headers: {
@@ -218,7 +230,7 @@ export default {
 
 	editData: (dataId, newData) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.put(ApiServer + `/users/data/${dataId}`, newData, {
 				headers: {
@@ -235,7 +247,7 @@ export default {
 
 	storePlainData: (data) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.post(ApiServer + '/users/data', data, {
 				headers: {
@@ -252,7 +264,7 @@ export default {
 
 	storeAttachment: (attachment) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			var formData = new FormData();
 			formData.append('attachment', attachment);
@@ -273,7 +285,7 @@ export default {
 
 	resendVerificationCode: () => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.get(ApiServer + '/users/verify/resend', {
 				headers: {
@@ -290,7 +302,7 @@ export default {
 
 	verifyEmail: (code) => {
 		return new Promise((resolve, reject) => {
-			var token = App.$store.getters.getAccessToken;
+			var token = getToken();
 
 			Vue.http.post(ApiServer + '/users/verify', {
 				code
