@@ -182,11 +182,16 @@ export default {
 
 			var file = e.target.files[0];
 
+			console.log(allowedMimes);
+
+
 			if(file.size > allowedSize * 1024) {
 				this.cancelAttachmentDialog();
 				App.createAlert(App.trans().error, App.trans().profile.tooLargeFile(this.humanSize(allowedSize * 1024)));
 			} else {
 				var fileType = file.type || 'application/octet-stream';
+
+				console.log(fileType);
 
 				if(fileType.includes('image/') || fileType.includes('text/') || allowedMimes.indexOf(fileType) != -1) {
 					this.attachmentDialog.file = file;

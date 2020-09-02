@@ -9,7 +9,7 @@ Vue.http = Vue.prototype.$http = axios;
 var ApiServer = 'https://safest.pp.ua/api';
 
 var mapError = error => {
-	var err = errors[error];
+	var err = window.App.trans().apiErrors.texts[error];
 
 	if(err === undefined) return error;
 	else return err;

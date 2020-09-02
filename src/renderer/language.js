@@ -10,7 +10,13 @@ export default {
 			unknown: "Невідома помилка",
 			notFound: "Не знайдено",
 			console: "Подробиці в консолі",
-			tryLater: "Забагато запитів. Спробуйте пізніше"
+			tryLater: "Забагато запитів. Спробуйте пізніше",
+			texts: {
+				'Wrong credentials': 'Невірний логін та/або пароль або користувач не існує',
+				'Wrong key': 'Невірний ключ',
+				'Bad or damaged key': 'Ключ пошкоджено',
+				'Wrong verification code': 'Невірний код'
+			}
 		},
 		error: "Помилка",
 		success: "Успішно",
@@ -131,7 +137,13 @@ export default {
 			unknown: "Неизвестная ошибка",
 			notFound: "Не найдено",
 			console: "Подробности в консоли",
-			tryLater: "Слишком много запросов. Попробуйте позже"
+			tryLater: "Слишком много запросов. Попробуйте позже",
+			texts: {
+				'Wrong credentials': 'Неверный логин и/или пароль или пользователь не существует',
+				'Wrong key': 'Неверный ключ',
+				'Bad or damaged key': 'Ключ повреждено',
+				'Wrong verification code': 'Неверный код'
+			}
 		},
 		error: "Ошибка",
 		success: "Успешно",
@@ -252,7 +264,13 @@ export default {
 			unknown: "Unknown error",
 			notFound: "Not found",
 			console: "Details in the console",
-			tryLater: "Too many attempts. Try again later"
+			tryLater: "Too many attempts. Try again later",
+			texts: {
+				'Wrong credentials': 'Invalid login and/or password or user does not exist',
+				'Wrong key': 'Wrong key',
+				'Bad or damaged key': 'The key is damaged',
+				'Wrong verification code': 'Invalid code'
+			}
 		},
 		error: "Error",
 		success: "Success",
