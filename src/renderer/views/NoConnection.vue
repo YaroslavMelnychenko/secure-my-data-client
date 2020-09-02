@@ -3,8 +3,8 @@
         <div class="no-connection__wrapper">
             <md-empty-state class="md-primary no-connection__message"
                 md-icon="error"
-                md-label="Помилка"
-                md-description="Відсутнє з'єднання з сервером"
+                :md-label="App.trans().error"
+                :md-description="App.trans().noConnection"
             >
             </md-empty-state>
         </div>

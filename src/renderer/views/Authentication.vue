@@ -3,16 +3,16 @@
 		<div class="authentication__wrapper">
 			<md-card class="authentication-form__card">
 				<md-card-header class="authentication-form__card-header">
-					<div class="md-title">Увійдіть або зареєструйтесь</div>
+					<div class="md-title">{{ App.trans().auth.signInOrUp }}</div>
 				</md-card-header>
 				<md-card-content class="authentication-form__card-content">
 					<md-tabs class="authentication-form__card-tabs"
 						:md-active-tab="activeTab"
 					>
-						<md-tab id="tab_sign_in" md-label="Увійти">
+						<md-tab id="tab_sign_in" :md-label="App.trans().auth.signIn">
 							<sign-in class="authentication-form__form"></sign-in>
 						</md-tab>
-						<md-tab id="tab_sign_up" md-label="Зареєструватись">
+						<md-tab id="tab_sign_up" :md-label="App.trans().auth.signUp">
 							<sign-up class="authentication-form__form"
 								@openRandomizer="onRandomizerOpen"
 							></sign-up>
@@ -20,6 +20,16 @@
 					</md-tabs>
 				</md-card-content>
 			</md-card>
+			<div class="authentication-language">
+				<md-field>
+					<label for="language">{{ App.trans().language }}</label>
+					<md-select v-model="language" name="language" id="language">
+						<md-option value="ua">UA</md-option>
+						<md-option value="ru">RU</md-option>
+						<md-option value="en">EN</md-option>
+					</md-select>
+				</md-field>
+			</div>
 		</div>
 		<randomizer 
 			:showDialog="showDialog"
@@ -46,6 +56,7 @@ export default {
 			activeTab: 'tab_sign_in',
 			showDialog: false,
 			userData: {},
+			language: 'en'
 		}
 	},
 	methods: {
@@ -57,12 +68,20 @@ export default {
 		onRandomizerClose() {
 			this.showDialog = false;
 			this.activeTab = 'tab_sign_in';
-			App.createAlert('Успішно', 'Ви зареєстровані в системі. На вашу електронну пошту було надіслано лист для підтвердження. Щоб почати користуватись сервісом використовуйте отриманий ключ та пароль.<br><br>Не передавайте ключ стороннім особам та не повідомляйте ваш пароль, інакше ваші дані опиняться в небезпеці.');
+			App.createAlert(App.trans().success, App.trans().register);
 		},
 
 		redirectToProfile() {
 			this.$router.replace({ name: 'profile' });
 		}
+	},
+	watch: {
+		language(value) {
+			App.setLanguage(value);
+		} 
+	},
+	mounted() {
+		App.setLanguage(this.language);
 	}
 }
 </script>
@@ -111,4 +130,11 @@ export default {
 
 		.md-field:first-child
 			margin-top: 0
+
+.authentication-language
+	position: absolute
+	right: 0
+	bottom: 0
+	max-width: 100px
+	margin-right: 24px
 </style>

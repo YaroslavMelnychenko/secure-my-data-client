@@ -9,44 +9,44 @@
 			/>
 			<span class="md-error"
 				v-if="!$v.email.required" 
-			>вкажіть пошту</span>
+			>{{ App.trans().auth.specify.email }}</span>
 			<span class="md-error"
 				v-else-if="!$v.email.email"
-			>невірний формат</span>
+			>{{ App.trans().auth.wrong.format }}</span>
 		</md-field>
 		<md-field
 			:class="$v.password.$error ? 'md-invalid' : ''"
 		>
-			<label for="sign_up_password">Пароль</label>
+			<label for="sign_up_password">{{ App.trans().auth.password }}</label>
 			<md-input name="sign_up_password" id="sign_up_password" type="password" 
 				v-model.trim="password"
 			/>
 			<span class="md-error"
 				v-if="!$v.password.required" 
-			>вкажіть пароль</span>
+			>{{ App.trans().auth.specify.password }}</span>
 			<span class="md-error"
 				v-else-if="!$v.password.strongPassword" 
-			>хоча б одна літера в обох регістрах, цифра та спецсимвол</span>
+			>{{ App.trans().auth.format.password }}</span>
 			<span class="md-error"
 				v-else-if="!$v.password.minLength" 
-			>довжина не менше {{ minPasswordLength }} символів</span>
+			>{{ App.trans().auth.length(minPasswordLength) }}</span>
 		</md-field>
 		<md-field
 			:md-toggle-password="false"
 			:class="$v.passwordVerify.$error ? 'md-invalid' : ''"
 		>
-			<label for="sign_up_password_verify">Повторіть пароль</label>
+			<label for="sign_up_password_verify">{{ App.trans().auth.verifyPassword }}</label>
 			<md-input name="sign_up_password_verify" id="sign_up_password_verify" type="password" 
 				v-model.trim="passwordVerify"
 			/>
 			<span class="md-error"
 				v-if="!$v.passwordVerify.required" 
-			>повторіть пароль</span>
+			>{{ App.trans().auth.verifyPassword.toLowerCase() }}</span>
 			<span class="md-error"
 				v-else-if="!$v.passwordVerify.sameAsPassword" 
-			>паролі не співпадають</span>
+			>{{ App.trans().auth.wrong.repeatPassword }}</span>
 		</md-field>
-		<md-button type="submit" class="md-raised md-primary">Зареєструватись</md-button>
+		<md-button type="submit" class="md-raised md-primary">{{ App.trans().auth.signUp }}</md-button>
 	</form>
 </template>
 
@@ -107,7 +107,7 @@ export default {
 					this.resetForm();
 
 				}).catch(() => {
-					App.createAlert('Помилка', 'Користувач з такою поштою вже зареєстрований');
+					App.createAlert(App.trans().error, App.trans().auth.userExists);
 				});
 
 			}

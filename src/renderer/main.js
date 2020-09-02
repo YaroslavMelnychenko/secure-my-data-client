@@ -8,6 +8,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import api from './api'
+import lang from './language'
 
 var version = require('../../package.json').version
 
@@ -20,6 +21,7 @@ Vue.appVersion = Vue.prototype.$appVersion = () => {
 }
 
 Vue.api = Vue.prototype.$api = api
+Vue.lang = Vue.prototype.$lang = lang
 
 Vue.use(VueMaterial)
 Vue.use(Vuelidate)
@@ -34,3 +36,5 @@ var Root = new Vue({
 
 window.App = Root.$children[0];
 window.App.$router.replace('/');
+
+Vue.App = Vue.prototype.App = Root.$children[0];

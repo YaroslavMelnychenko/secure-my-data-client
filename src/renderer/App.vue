@@ -156,6 +156,20 @@ export default {
 
 			}
 		},
+
+		getLanguage() {
+			return this.$store.getters.getLanguage;
+		},
+
+		setLanguage(language) {
+			this.$store.dispatch('setLanguage', language);
+		},
+
+		trans() {
+			var currentLanguage = this.getLanguage();
+			
+			return this.$lang[currentLanguage];
+		}
 	},
 	mounted() {
 		setTimeout(() => {

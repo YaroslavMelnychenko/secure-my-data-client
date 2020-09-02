@@ -1,7 +1,8 @@
 const state = {
 	apiSettings: {},
 	accessToken: null,
-	refreshToken: null
+	refreshToken: null,
+	language: 'ua'
 }
   
 const mutations = {
@@ -15,6 +16,10 @@ const mutations = {
 
 	SET_REFRESH_TOKEN(state, refreshToken) {
 		state.refreshToken = refreshToken;
+	},
+
+	SET_LANGUAGE(state, language) {
+		state.language = language;
 	}
 }
   
@@ -41,6 +46,10 @@ const actions = {
 			commit('SET_ACCESS_TOKEN', response.message.access_token);
 			commit('SET_REFRESH_TOKEN', response.message.refresh_token);
 		});
+	},
+
+	setLanguage ({ commit }, language) {
+		commit('SET_LANGUAGE', language);
 	}
 }
 
@@ -55,6 +64,10 @@ const getters = {
 
 	getRefreshToken: state => {
 		return state.refreshToken;
+	},
+
+	getLanguage: state => {
+		return state.language;
 	}
 }
   

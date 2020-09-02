@@ -6,8 +6,8 @@
 		<md-content class="md-accent profile__not-verified"
 			v-if="!verified"
 		>
-			Ваша електронна пошта не підтверджена, для завантаження даних вам необхідно підтвердити її 
-			<md-button class="md-dense md-raised md-primary" @click="onVerifyOpen">Підтвердити</md-button>
+			{{ App.trans().profile.mailUnverified }}
+			<md-button class="md-dense md-raised md-primary" @click="onVerifyOpen">{{ App.trans().profile.verify }}</md-button>
 		</md-content>
 		<data-table
 			class="profile__content"
@@ -64,7 +64,7 @@ export default {
 	methods: {
 		onUserDataUpdate() {
 			this.getUserDetails().then(() => {
-				App.createAlert('Успішно', 'Ваша електронна пошта підтверджена');
+				App.createAlert(App.trans().success, App.trans().profile.verified);
 			});
 		},
 

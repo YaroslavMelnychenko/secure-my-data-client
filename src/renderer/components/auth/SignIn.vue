@@ -9,38 +9,38 @@
 			/>
 			<span class="md-error"
 				v-if="!$v.email.required" 
-			>вкажіть пошту</span>
+			>{{ App.trans().auth.specify.email }}</span>
 			<span class="md-error"
 				v-else-if="!$v.email.email"
-			>невірний формат</span>
+			>{{ App.trans().auth.wrong.format }}</span>
 		</md-field>
 		<md-field
 			:class="$v.password.$error ? 'md-invalid' : ''"
 		>
-			<label for="sign_in_password">Пароль</label>
+			<label for="sign_in_password">{{ App.trans().auth.password }}</label>
 			<md-input name="sign_in_password" id="sign_in_password" type="password" 
 				v-model.trim="password"
 			/>
 			<span class="md-error"
 				v-if="!$v.password.required" 
-			>вкажіть пароль</span>
+			>{{ App.trans().auth.specify.password }}</span>
 			<span class="md-error"
 				v-else-if="!$v.password.minLength" 
-			>довжина не менше {{ minPasswordLength }} символів</span>
+			>{{ App.trans().auth.length(minPasswordLength) }}</span>
 		</md-field>
 		<md-field
 			:class="$v.key.$error ? 'md-invalid' : ''"
 		>
-			<label>Ключ</label>
+			<label>{{ App.trans().auth.key }}</label>
 			<md-file 
 				v-model="keyName"
 				@change="onKeyChange"
 			/>
 			<span class="md-error"
 				v-if="!$v.key.required" 
-			>оберіть ключ</span>
+			>{{ App.trans().auth.specify.key }}</span>
 		</md-field>
-		<md-button type="submit" class="md-raised md-primary">Увійти</md-button>
+		<md-button type="submit" class="md-raised md-primary">{{ App.trans().auth.signIn }}</md-button>
 	</form>
 </template>
 
@@ -82,7 +82,7 @@ export default {
 			if(file.size > 1000 || file.type != "") {
 				this.key = null;
 				this.keyName = '';
-				App.createAlert('Помилка', 'Файл занадто великий або невірного формату');
+				App.createAlert(App.trans().error, App.trans().auth.tooLargeOrWrongFormat);
 			} else {
 				this.key = file
 			}

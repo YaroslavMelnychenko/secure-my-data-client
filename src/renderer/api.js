@@ -35,39 +35,39 @@ var parseError = error => {
 
 	switch(error.response.status) {
 		case 422:
-			window.App.createAlert('Помилка валідації', message);
+			window.App.createAlert(window.App.trans().apiErrors.validation, message);
 			break;
 		
 		case 400:
-			window.App.createAlert('Помилка', mapError(message));
+			window.App.createAlert(window.App.trans().apiErrors.basic, mapError(message));
 			break;
 
 		case 401:
-			window.App.createAlert('Помилка авторизації', mapError(message));
+			window.App.createAlert(window.App.trans().apiErrors.auth, mapError(message));
 			break;
 
 		case 403:
-			window.App.createAlert('Помилка: заборонено', message)
+			window.App.createAlert(window.App.trans().apiErrors.restricted, message)
 			break;
 
 		case 404:
-			window.App.createAlert('Помилка', 'Не знайдено');
+			window.App.createAlert(window.App.trans().apiErrors.basic, window.App.trans().apiErrors.notFound);
 			break;
 
 		case 405:
-			window.App.createAlert('Помилка: невірний метод', message);
+			window.App.createAlert(window.App.trans().apiErrors.method, message);
 			break;
 
 		case 500:
-			window.App.createAlert('Помилка серверу', 'Подробиці в консолі');
+			window.App.createAlert(window.App.trans().apiErrors.server, window.App.trans().apiErrors.console);
 			break;
 
 		case 503:
-			window.App.createAlert('Помилка', 'Забагато запитів. Спробуйте пізніше');
+			window.App.createAlert(window.App.trans().apiErrors.basic, window.App.trans().apiErrors.tryLater);
 			break;
 
 		default: 
-			window.App.createAlert('Невідома помилка', error.message);
+			window.App.createAlert(window.App.trans().apiErrors.unknown, error.message);
 			break;
 	}
 };

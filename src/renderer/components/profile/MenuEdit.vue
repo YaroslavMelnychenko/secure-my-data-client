@@ -6,7 +6,7 @@
 		>
 			<md-speed-dial-target class="md-accent">
 				<md-icon>menu</md-icon>
-				<md-tooltip md-direction="right">Меню дій</md-tooltip>
+				<md-tooltip md-direction="right">{{ App.trans().profile.actionsMenu }}</md-tooltip>
 			</md-speed-dial-target>
 
 			<md-speed-dial-content>
@@ -14,30 +14,30 @@
 					@click="onEditClicked"
 				>
 					<md-icon>create</md-icon>
-					<md-tooltip md-direction="left">Змінити ім'я</md-tooltip>
+					<md-tooltip md-direction="left">{{ App.trans().profile.changeName }}</md-tooltip>
 				</md-button>
 
 				<md-button class="md-icon-button"
 					@click="onDownloadClicked"
 				>
 					<md-icon>get_app</md-icon>
-					<md-tooltip md-direction="left">Завантажити</md-tooltip>
+					<md-tooltip md-direction="left">{{ App.trans().profile.download }}</md-tooltip>
 				</md-button>
 
 				<md-button class="md-icon-button"
 					@click="onDeleteClicked"
 				>
 					<md-icon>delete</md-icon>
-					<md-tooltip md-direction="left">Видалити</md-tooltip>
+					<md-tooltip md-direction="left">{{ App.trans().profile.remove }}</md-tooltip>
 				</md-button>
 			</md-speed-dial-content>
 		</md-speed-dial>
 		<md-dialog-confirm
 			:md-active.sync="showConfirm"
-			md-title="Підтвердження"
-			md-content="Ви впевнені що хочете видалити обрані дані?"
-			md-confirm-text="Так"
-			md-cancel-text="Ні"
+			:md-title="App.trans().profile.confirmation"
+			:md-content="App.trans().profile.areYouSure"
+			:md-confirm-text="App.trans().profile.yes"
+			:md-cancel-text="App.trans().profile.no"
 			@md-cancel="showConfirm = false"
 			@md-confirm="onDeleteConfirm" 
 			:md-close-on-esc="false"
@@ -47,11 +47,11 @@
 			class="menu-edit__prompt"
 			:md-active.sync="showPrompt"
 			v-model="promptValue"
-			md-title="Введіть нове ім'я"
+			:md-title="App.trans().profile.enterNewName"
 			:md-input-maxlength="255"
-			md-input-placeholder="Нове ім'я"
-			md-confirm-text="Зберегти"
-			md-cancel-text="Відмінити" 
+			:md-input-placeholder="App.trans().profile.newName"
+			:md-confirm-text="App.trans().profile.save"
+			:md-cancel-text="App.trans().profile.cancel" 
 			:md-close-on-esc="false"
 			:md-click-outside-to-close="false"
 		/>
@@ -139,7 +139,7 @@ export default {
 				App.loaderState(true);
 
 				this.$api.getData(this.item.id).then(response => {
-					App.createAlert('Успішно', response.message);
+					App.createAlert(App.trans().success, response.message);
 				}).finally(() => {
 					App.loaderState(false);
 				});
@@ -166,7 +166,7 @@ export default {
 
 			req.on('end', function() {
 				App.progressLoaderState(false);
-				App.createAlert('Успішно', 'Файл успішно розшифровано, завантажено та збережено');
+				App.createAlert(App.trans().success, App.trans().profile.received);
 			});
 		}
 	}

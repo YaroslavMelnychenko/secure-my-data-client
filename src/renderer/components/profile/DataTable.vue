@@ -9,25 +9,25 @@
 			:md-sort-fn="customSort"
 		>
 			<md-table-toolbar>
-				<h1 class="md-title">Мої дані</h1>
+				<h1 class="md-title">{{ App.trans().profile.myData }}</h1>
 				<md-field md-clearable class="md-toolbar-section-end">
-					<md-input placeholder="Пошук за ім'ям" v-model="search" @input="searchOnTable" />
+					<md-input :placeholder="App.trans().profile.searchByName" v-model="search" @input="searchOnTable" />
 				</md-field>
 			</md-table-toolbar>
 
 			<md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single" class="md-primary">
-				<md-table-cell md-label="Ім'я" md-sort-by="name">{{ fullName(item.name, item.ext) }}</md-table-cell>
-				<md-table-cell md-label="Тип" md-sort-by="type"> 
+				<md-table-cell :md-label="App.trans().profile.name" md-sort-by="name">{{ fullName(item.name, item.ext) }}</md-table-cell>
+				<md-table-cell :md-label="App.trans().profile.type" md-sort-by="type"> 
 					<md-icon class="md-size-1x">{{ getType(item.mime_type) }}</md-icon>
 				</md-table-cell>
-				<md-table-cell md-label="Розмір" md-sort-by="size">{{ item.size | humanSize }}</md-table-cell>
-				<md-table-cell md-label="Дата завантаження" md-sort-by="date">{{ item.created_at | humanDate }}</md-table-cell>
+				<md-table-cell :md-label="App.trans().profile.size" md-sort-by="size">{{ item.size | humanSize }}</md-table-cell>
+				<md-table-cell :md-label="App.trans().profile.date" md-sort-by="date">{{ item.created_at | humanDate }}</md-table-cell>
 			</md-table-row>
 
 			<md-table-empty-state
 				class="md-primary"
 				md-icon="cloud_off"
-				md-label="Даних не знайдено"
+				:md-label="App.trans().profile.noData"
 			>
 			</md-table-empty-state>
 		</md-table>
@@ -157,13 +157,13 @@ export default {
 				hour12: false
 			};			
 
-			return new Intl.DateTimeFormat('uk', options).format(date);
+			return new Intl.DateTimeFormat(App.trans().profile.dateFormat, options).format(date);
 		},
 
 		humanSize(bytes) {
-			var sizes = ['Байт', 'кБ', 'МБ', 'ГБ', 'ТБ'];
+			var sizes = App.trans().profile.sizes;
 
-			if (bytes == 0) return '0 Байт';
+			if (bytes == 0) return App.trans().profile.nullSize;
 			if (bytes == null) return ' ';
 
 			var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));

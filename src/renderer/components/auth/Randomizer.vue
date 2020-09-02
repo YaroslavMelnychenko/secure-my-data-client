@@ -5,21 +5,21 @@
 			:md-click-outside-to-close="false" 
 			:md-close-on-esc="false"
 		>
-			<md-dialog-title>Генерація ключової пари</md-dialog-title>
+			<md-dialog-title>{{ App.trans().randomizer.generatingKeyPair }}</md-dialog-title>
 			<md-dialog-content>
-				<div class="randomizer__description">Для генерації відкритого та закритого ключа необхідно отримати випадкові дані. Для цього наведіть мишку на поле нижче та виконуйте випадкові рухи в межах цього поля, на основі яких і буде створена ключова пара</div>
+				<div class="randomizer__description">{{ App.trans().randomizer.text }}</div>
 				<div class="randomizer__progress">
-					<div class="randomizer__progress-label">Прогрес: {{ progress }}%</div>
+					<div class="randomizer__progress-label">{{ App.trans().randomizer.progress }}: {{ progress }}%</div>
 					<md-progress-bar :class="['randomizer__progress-bar', progress == 100 ? 'randomizer__progress-bar--finished' : '']" md-mode="determinate" :md-value="progress"></md-progress-bar>
 				</div>
 				<div id="randomizer_block" :class="['randomizer__block', startedRecord && !finishedRecord ? 'randomizer__block--active' : '']" @mousemove="onMouseMove">
 					<div class="randomizer__block-text"
 						v-if="startedRecord && !finishedRecord"
-					>Рухайте мишкою тут</div>
+					>{{ App.trans().randomizer.moveHere }}</div>
 					<md-button type="submit" class="md-primary randomizer__block-button"
 						v-if="!startedRecord"
 						@click="startedRecord = true"
-					>Розпочати</md-button>
+					>{{ App.trans().randomizer.start }}</md-button>
 					<div class="randomizer__block-spinner"
 						v-if="showSpinner"
 					>
@@ -28,14 +28,14 @@
 							:md-diameter="40"
 							:md-stroke="3"
 						></md-progress-spinner>
-						<div class="randomizer__block-spinner-label">Генерація</div>
+						<div class="randomizer__block-spinner-label">{{ App.trans().randomizer.generating }}</div>
 					</div>
 					<md-button class="md-primary md-raised randomizer__ready"
 						v-if="keyReady"
 						@click="onKeyDownload"
 					>
 						<md-icon>cloud_download</md-icon>
-						<span>завантажити ключ</span>
+						<span>{{ App.trans().randomizer.downloadKey }}</span>
 					</md-button>
 					<canvas id="randomizer_canvas"
 						:style="showDrawing ? 'opacity: 1' : ''"
@@ -200,7 +200,7 @@ export default {
 					
 					fs.writeFile(path, this.key.content, (err) => {
 						if(err){
-							App.createAlert('Помилка збереження файлу', err.message);
+							App.createAlert(App.trans().randomizer.fileCreationError, err.message);
 							return;
 						}
 									

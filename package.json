@@ -1,6 +1,6 @@
 {
   "name": "smd-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Yaroslav Melnychenko <jaroslav.melnychenko@gmail.com>",
   "description": "Software product for the safe storage of confidential data on the Internet",
   "license": null,
@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "smd-client",
-    "appId": "com.smd.client",
+    "productName": "Secure My Data",
+    "appId": "com.electron.smd",
     "directories": {
       "output": "build"
     },
@@ -48,6 +48,13 @@
     },
     "linux": {
       "icon": "build/icons"
+    },
+    "nsis": {
+      "oneClick": "false",
+      "allowToChangeInstallationDirectory": "true",
+      "shortcutName": "Secure My Data",
+      "perMachine": "true",
+      "deleteAppDataOnUninstall": "true"
     }
   },
   "dependencies": {
