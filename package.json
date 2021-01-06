@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "smart-grid": "^2.1.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
